@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Love Story 💕 | A Romantic Scrapbook</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+  
+  <!-- Romantic Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Comfortaa:wght@300;400;600;700&family=Dancing+Script:wght@500;700&family=Nunito:wght@300;400;600;700;800&family=Patrick+Hand&family=Sacramento&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Floating Canvas for Hearts & Particles -->
+  <canvas id="hearts-canvas" aria-hidden="true"></canvas>
+
+  <!-- Autoplay Prompt Banner (for modern browser audio policy) -->
+  <div id="audio-banner" class="audio-banner">
+    <div class="audio-banner-content">
+      <span class="banner-icon">🎵</span>
+      <span class="banner-text">Tap anywhere or press play to immerse yourself in our romantic melody!</span>
+      <button id="banner-play-btn" class="banner-btn" aria-label="Play Music">▶ Play Song</button>
+      <button id="banner-dismiss-btn" class="banner-close" aria-label="Dismiss">&times;</button>
+    </div>
+  </div>
+
+  <!-- Persistent Floating Music Player -->
+  <aside class="music-player-widget" id="music-widget">
+    <div class="vinyl-disc-container">
+      <div class="vinyl-disc" id="vinyl-disc">
+        <div class="vinyl-grooves"></div>
+        <div class="vinyl-label">
+          <span class="heart-symbol">❤️</span>
+        </div>
+      </div>
+      <div class="tonearm" id="tonearm"></div>
+    </div>
+    <div class="music-info">
+      <div class="music-title-wrap">
+        <span class="music-title" id="widget-song-title">Our Romantic Melody</span>
+      </div>
+      <div class="music-controls">
+        <button id="music-play-btn" class="music-btn" aria-label="Play or Pause">
+          <span id="play-icon">▶</span>
+        </button>
+        <button id="music-mode-btn" class="music-btn-secondary" title="Switch Sound: Song or Music Box">
+          <span id="music-mode-icon">🎹</span>
+        </button>
+        <div class="volume-slider-wrap" title="Volume">
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" aria-label="Volume">
+        </div>
+      </div>
+    </div>
+    <!-- Hidden native audio element -->
+    <audio id="bg-audio" preload="auto" loop></audio>
+  </aside>
+
+  <!-- Top Scrapbook Ribbon Navigation -->
+  <header class="scrapbook-header">
+    <nav class="nav-ribbon">
+      <div class="washi-tape tape-nav-left"></div>
+      <div class="washi-tape tape-nav-right"></div>
+      
+      <div class="nav-brand">
+        <span class="brand-heart">💖</span>
+        <span class="brand-text" id="nav-couple-names">Teja & My Love</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#timeline" class="nav-link">Our Timeline</a></li>
+        <li><a href="#polaroids" class="nav-link">Polaroids</a></li>
+        <li><a href="#letter" class="nav-link">Love Letter</a></li>
+        <li><a href="#surprise" class="nav-link">Surprise</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Couple Role Status Badge -->
+        <div id="nav-user-badge" class="nav-user-badge" title="Current Logged In Profile">
+          <span class="user-role-icon" id="user-role-icon">👑</span>
+          <span class="user-role-name" id="user-role-name">Boyfriend (Editor)</span>
+        </div>
+
+        <!-- Boyfriend Controls -->
+        <a href="admin.html" id="open-admin-link" class="btn-admin-link" title="Full-page Admin Panel to edit photos & wordings">
+          <span>⚙️ Admin Panel</span>
+        </a>
+        <button id="open-bf-editor-btn" class="btn-boyfriend-pill" title="Boyfriend's Edit Studio & Control Panel">
+          <span>👔 Boyfriend Studio ✏️</span>
+        </button>
+        <button id="toggle-edit-mode-btn" class="btn-mode-toggle" title="Toggle Boyfriend Edit Mode ON or OFF">
+          <span id="mode-toggle-text">✏️ Edit Mode: ON</span>
+        </button>
+
+        <!-- Girlfriend Controls -->
+        <button id="gf-open-note-btn" class="btn-gf-pill" style="display:none;" title="Write a Sweet Love Note to Boyfriend">
+          <span>💌 Love Note to Him 💕</span>
+        </button>
+
+        <!-- Couple Switch Profile / Login Button -->
+        <button id="couple-switch-user-btn" class="btn-switch-account" title="Switch User or Login">
+          <span id="switch-user-icon">🔄</span>
+          <span id="switch-user-text">Switch Account</span>
+        </button>
+
+        <button id="open-customize-btn" class="btn-scrapbook-pill" style="display:none;" title="Legacy Personalize">
+          <span>✏️ Personalize</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Floating Quick-Action Widget (Updates according to active couple role) -->
+  <aside class="floating-bf-widget" id="floating-role-widget">
+    <button id="float-bf-editor-btn" class="btn-float-bf" title="Open Boyfriend Edit Studio">
+      <span class="bf-icon">👔</span>
+      <span class="bf-text">Boyfriend Studio</span>
+      <span class="bf-badge">✏️</span>
+    </button>
+    <button id="float-gf-note-btn" class="btn-float-gf" style="display:none;" title="Write a Sweet Love Note to Boyfriend">
+      <span class="gf-icon">💌</span>
+      <span class="gf-text">Love Note to Him</span>
+      <span class="gf-badge">💕</span>
+    </button>
+    <button id="float-login-btn" class="btn-float-login" style="display:none;" title="Login to Couple Portal">
+      <span class="login-icon">💖</span>
+      <span class="login-text">Couple Login</span>
+    </button>
+  </aside>
+
+  <!-- Main Scrapbook Content Area -->
+  <main class="scrapbook-container">
+
+    <!-- Girlfriend Princess Welcome Banner (Visible when logged in as Girlfriend) -->
+    <div id="princess-welcome-banner" class="princess-welcome-banner" style="display:none;">
+      <div class="princess-banner-inner">
+        <span class="princess-crown-anim">👑</span>
+        <div class="princess-banner-text">
+          <div class="princess-banner-title">Welcome home, Princess <span class="girlfriend-display">My Dearest</span>! 💕</div>
+          <div class="princess-banner-sub">Every heartbeat, memory, and photo here was designed just for you with endless love.</div>
+        </div>
+        <button type="button" id="princess-note-action-btn" class="btn-princess-action">💌 Write Him a Love Note</button>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 1: HOME / HERO ==================== -->
+    <section id="home" class="scrap-section hero-section">
+      <!-- Decorative background stickers & stamps -->
+      <div class="sticker sticker-stamp stamp-top-right">
+        <div class="postmark">LOVE MAIL • SPECIAL DELIVERY</div>
+        <div class="stamp-inner">💌 2024</div>
+      </div>
+      <div class="sticker sticker-flower flower-bottom-left">🌸</div>
+      <div class="sticker sticker-bow bow-top-left">🎀</div>
+      <div class="sticker sticker-sparkle sparkle-1">✨</div>
+      <div class="sticker sticker-sparkle sparkle-2">✨</div>
+
+      <!-- Main Scrapbook Hero Card -->
+      <div class="scrapbook-card hero-card">
+        <div class="washi-tape tape-hero-tl"></div>
+        <div class="washi-tape tape-hero-tr"></div>
+        <div class="pushpin pin-hero"></div>
+
+        <div class="hero-badge">
+          <span>📖 A Scrapbook of Our Love Story</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="couple-name girlfriend-display" id="hero-girlfriend">Teja</span>
+          <span class="hero-ampersand">&</span>
+          <span class="couple-name boyfriend-display" id="hero-boyfriend">Yours Always</span>
+        </h1>
+
+        <p class="hero-subtitle" id="hero-subtitle">
+          "Every day with you is my favourite page in the story of us."
+        </p>
+
+        <!-- Cute Featured Couple Polaroid inside Hero -->
+        <div class="hero-featured-polaroid">
+          <div class="washi-tape tape-hero-photo"></div>
+          <img src="images/photo_selfie_outdoor.jpg" alt="Our outdoor selfie" class="hero-photo-img" id="hero-photo-img">
+          <div class="hero-photo-caption" id="hero-photo-caption">August 20 • Where forever began 💕</div>
+        </div>
+
+        <!-- Live Love Days Counter -->
+        <div class="counter-container">
+          <div class="counter-header">
+            <span class="clock-icon">⏳</span>
+            <span>Started on <strong>August 20</strong> • Loving each other for</span>
+            <span class="live-pill"><span class="live-dot"></span> LIVE</span>
+          </div>
+          <div class="counter-grid">
+            <div class="counter-box">
+              <span class="counter-num" id="counter-days">0</span>
+              <span class="counter-label">Days</span>
+            </div>
+            <div class="counter-divider">:</div>
+            <div class="counter-box">
+              <span class="counter-num" id="counter-hours">00</span>
+              <span class="counter-label">Hours</span>
+            </div>
+            <div class="counter-divider">:</div>
+            <div class="counter-box">
+              <span class="counter-num" id="counter-minutes">00</span>
+              <span class="counter-label">Minutes</span>
+            </div>
+            <div class="counter-divider">:</div>
+            <div class="counter-box">
+              <span class="counter-num" id="counter-seconds">00</span>
+              <span class="counter-label">Seconds</span>
+            </div>
+          </div>
+          <div class="counter-footer">
+            <span id="counter-anniversary-label">Started August 20 • Counting live every single second ❤️</span>
+            <div class="live-time-sub" id="live-time-now">Current Live Time: --:--:--</div>
+          </div>
+        </div>
+
+        <!-- Hero Action Buttons -->
+        <div class="hero-actions">
+          <a href="#timeline" class="btn-romantic btn-primary">
+            <span>Explore Our Journey 📖</span>
+          </a>
+          <button id="send-kiss-btn" class="btn-romantic btn-kiss">
+            <span>Send a Kiss 💋</span>
+          </button>
+          <a href="#letter" class="btn-romantic btn-secondary">
+            <span>Read Love Letter 💌</span>
+          </a>
+        </div>
+
+        <!-- Romantic Quote Card Note -->
+        <div class="sticky-note hero-sticky">
+          <div class="washi-tape tape-sticky"></div>
+          <p class="quote-text" id="hero-quote">
+            "In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."
+          </p>
+          <span class="quote-author" id="hero-quote-author">— Maya Angelou</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2: OUR TIMELINE ==================== -->
+    <section id="timeline" class="scrap-section timeline-section">
+      <div class="section-header">
+        <div class="sticker-tag">📅 Chapter by Chapter</div>
+        <h2 class="section-title">Our Romantic Timeline</h2>
+        <p class="section-subtitle">
+          Milestones, little moments, road trips, and inside jokes that we treasure forever
+        </p>
+
+        <!-- Category Filters -->
+        <div class="timeline-filters">
+          <button class="filter-pill active" data-filter="all">All Memories 💖</button>
+          <button class="filter-pill" data-filter="milestone">Milestones 💍</button>
+          <button class="filter-pill" data-filter="date">Dates ☕</button>
+          <button class="filter-pill" data-filter="trip">Adventures 🚗</button>
+          <button class="filter-pill" data-filter="joke">Inside Jokes 🍕</button>
+        </div>
+
+        <!-- Timeline Photo Alignment Toolbar -->
+        <div class="timeline-layout-toolbar">
+          <span class="toolbar-label">📐 Photo Alignment:</span>
+          <div class="layout-btn-group" id="timeline-layout-btns">
+            <button class="layout-pill active" data-layout="zigzag" title="Alternating Left & Right">🔀 Zig-Zag</button>
+            <button class="layout-pill" data-layout="left" title="Align all cards to the Left side">⬅️ All Left</button>
+            <button class="layout-pill" data-layout="center" title="Center all cards across the timeline">🎯 All Center</button>
+            <button class="layout-pill" data-layout="right" title="Align all cards to the Right side">➡️ All Right</button>
+          </div>
+          <div class="toolbar-subhint">✨ You can also customize the alignment of each individual photo card below!</div>
+        </div>
+      </div>
+
+      <!-- Twine String Timeline Container -->
+      <div class="timeline-rope-wrap">
+        <div class="timeline-twine"></div>
+        <div class="timeline-list" id="timeline-container">
+          <div class="timeline-item left" data-id="m-1">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">August 20, 2024</span>
+              <h3 class="timeline-title">The Day Our Story Began ✨ (August 20)</h3>
+              <p class="timeline-story">August 20 was the day my whole universe shifted into color. From that very first moment, you brought warmth, laughter, and a kind of peace I had never known before. The happiest day of my life.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_selfie_outdoor.jpg" alt="August 20 • The start of forever 💕" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">August 20 • The start of forever 💕</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align active" data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-1" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-1" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item right" data-id="m-2">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Cozy Travel Days</span>
+              <h3 class="timeline-title">Journeys Together, Side by Side 🚌❤️</h3>
+              <p class="timeline-story">Long bus rides, sharing earphones, leaning on each other's shoulders, and watching the scenery roll past. It doesn't matter where the road goes, as long as I have your hand in mine.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_bus_journey.jpg" alt="Resting my head next to you 🚌" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Resting my head next to you 🚌</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align active" data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-2" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-2" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item center" data-id="m-3">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Shopping & Dates</span>
+              <h3 class="timeline-title">Hand in Hand Everywhere We Go 🤝✨</h3>
+              <p class="timeline-story">Walking through the crowds, fingers intertwined, sharing quiet laughs and gentle smiles. Being by your side makes every ordinary place feel like the most romantic spot on earth.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_mall_holding_hands.jpg" alt="Fingers locked forever 🤝" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Fingers locked forever 🤝</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align active" data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-3" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-3" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item left" data-id="m-4">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Platform Memories</span>
+              <h3 class="timeline-title">Station Goodbyes & Sweet Reunions 🚉💕</h3>
+              <p class="timeline-story">Even waiting at train stations became something I looked forward to, because every goodbye was just a countdown until I could hold you close again.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_station_canopy.jpg" alt="Station smiles & waiting for you 🚉" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Station smiles & waiting for you 🚉</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align active" data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-4" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-4" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item right" data-id="m-5">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Road Trips</span>
+              <h3 class="timeline-title">Bike Rides & Wind in Our Hair 🛵💨</h3>
+              <p class="timeline-story">Riding on the open country roads, fresh air, matching green jerseys, and holding on tight. Life with you is the sweetest, wildest adventure.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_bike_adventure.jpg" alt="Open roads & holding you tight 🛵🌿" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Open roads & holding you tight 🛵🌿</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align active" data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-5" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-5" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item left" data-id="m-6">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Cafe & Snack Dates</span>
+              <h3 class="timeline-title">Sweet Treats with My Sweetest Person 🍰😋</h3>
+              <p class="timeline-story">Stopping for delicious snacks and treats, smiling across the counter, and having the best conversations over food. You make every simple moment unforgettable.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_sweets_cafe.jpg" alt="Sweet moments & snacks together 🧁" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Sweet moments & snacks together 🧁</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align active" data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-6" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-6" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item center" data-id="m-7">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Pure Romance</span>
+              <h3 class="timeline-title">The Sweetest Cheek Kiss 💋💖</h3>
+              <p class="timeline-story">Every soft kiss on your cheek, every time your eyes sparkle when you smile—you make my heart flutter just like day one. I love you deeper with every passing sunrise.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_cheek_kiss.jpg" alt="My heart belongs only to you 💋" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">My heart belongs only to you 💋</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align active" data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-7" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-7" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item right" data-id="m-8">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Traditional Elegance</span>
+              <h3 class="timeline-title">My Angel in Traditional Beauty 🌸👑</h3>
+              <p class="timeline-story">Looking at you in traditional saree with that gentle, radiant smile... I am the luckiest person in the world to call you mine.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_gf_saree_hearts.jpg" alt="An absolute angel 🌸" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">An absolute angel 🌸</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align active" data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-8" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-8" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item left" data-id="m-9">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Nature Walk</span>
+              <h3 class="timeline-title">The Way My Heart Sees You 🍃✨</h3>
+              <p class="timeline-story">Surrounded by lush greenery and cool air, looking straight at you. You have this quiet, graceful radiance that stops time every single time I look into your eyes.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_gf_portrait.jpg" alt="Elegance in nature • My forever love 🍃" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Elegance in nature • My forever love 🍃</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align active" data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-9" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-9" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item center" data-id="m-10">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Pure Happiness</span>
+              <h3 class="timeline-title">The Melody of Your Laughter 💖😄</h3>
+              <p class="timeline-story">Whenever you burst into laughter, my whole world lights up. Hearing you laugh and seeing your eyes crinkle with pure joy is my greatest comfort, my favorite music, and my everyday peace.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_gf_joyful_laugh.jpg" alt="Your laugh is my absolute favorite sound ✨" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Your laugh is my absolute favorite sound ✨</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align active" data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align " data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-10" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-10" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item right" data-id="m-11">
+            <div class="timeline-peg"></div>
+            <div class="timeline-card">
+              <span class="timeline-date-badge">Candid Sweetness</span>
+              <h3 class="timeline-title">Effortlessly Adorable, Eternally Loved 🥰🎀</h3>
+              <p class="timeline-story">That cute, playful pose that makes my heart melt all over again. No matter where we go or how many years pass, you will always be the cutest, most precious princess in my universe.</p>
+              <div class="timeline-mini-polaroid">
+                <img src="images/photo_gf_cute_pose.jpg" alt="Effortlessly adorable • Loved beyond words 🥰" class="mini-polaroid-img" loading="lazy">
+                <div class="mini-polaroid-caption">Effortlessly adorable • Loved beyond words 🥰</div>
+              </div>
+              <div class="card-align-bar">
+                <span class="align-bar-label">📍 Align:</span>
+                <button class="btn-card-align " data-align="left" title="Pin Photo Left">Left ⬅️</button>
+                <button class="btn-card-align " data-align="center" title="Center Photo Card">Center 🎯</button>
+                <button class="btn-card-align active" data-align="right" title="Pin Photo Right">Right ➡️</button>
+                <button class="btn-card-edit" data-id="m-11" title="Edit this memory">✏️ Edit</button>
+                <button class="btn-card-delete btn-mini-del" data-id="m-11" title="Delete memory">🗑️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-actions">
+        <button id="open-add-memory-btn" class="btn-scrapbook-dashed">
+          <span>➕ Pin a New Memory to Our Timeline</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: POLAROID GALLERY ==================== -->
+    <section id="polaroids" class="scrap-section polaroids-section">
+      <div class="section-header">
+        <div class="sticker-tag">📷 Captured in Time</div>
+        <h2 class="section-title">Our Polaroid Gallery</h2>
+        <p class="section-subtitle">
+          Little snapshots of pure happiness with you. Click any photo to see it up close!
+        </p>
+      </div>
+
+      <!-- Polaroid Scrapboard Grid -->
+      <div class="polaroid-corkboard">
+        <div class="washi-tape tape-cork-tl"></div>
+        <div class="washi-tape tape-cork-tr"></div>
+        <div class="washi-tape tape-cork-bl"></div>
+        <div class="washi-tape tape-cork-br"></div>
+
+        <div class="polaroid-grid" id="polaroids-container">
+          <div class="polaroid-item" style="transform: rotate(-3deg);">
+            <div class="polaroid-tape washi-tape tape-pink"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_cheek_kiss.jpg" alt="The Sweetest Cheek Kiss" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">The Sweetest Cheek Kiss</h4>
+              <p class="polaroid-caption-text">A million kisses for my favorite person in the whole universe 💋</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Pure Love</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-1" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-1" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">99</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(2.5deg);">
+            <div class="polaroid-tape washi-tape tape-gold"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_gf_joyful_laugh.jpg" alt="Joyful Giggles & Pure Smile" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Joyful Giggles & Pure Smile</h4>
+              <p class="polaroid-caption-text">Your laugh is my absolute favorite melody in this world ✨</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Sunny Day</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-2" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-2" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">88</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(-2deg);">
+            <div class="polaroid-tape washi-tape tape-cream"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_selfie_outdoor.jpg" alt="Where It All Started" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Where It All Started</h4>
+              <p class="polaroid-caption-text">Standing under the sun, knowing my heart found its home ☀️</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">August 20</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-3" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-3" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">94</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(3.5deg);">
+            <div class="polaroid-tape washi-tape tape-mint"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_mall_holding_hands.jpg" alt="Holding Hands Everywhere" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Holding Hands Everywhere</h4>
+              <p class="polaroid-caption-text">Fingers locked tight, walking through life hand in hand 🤝</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Mall Date</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-4" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-4" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">76</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(-3.5deg);">
+            <div class="polaroid-tape washi-tape tape-lavender"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_gf_saree_hearts.jpg" alt="Angel in Saree" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Angel in Saree</h4>
+              <p class="polaroid-caption-text">Floating hearts for the most gorgeous girl to ever exist 🌸</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Traditional Grace</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-5" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-5" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">102</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(2deg);">
+            <div class="polaroid-tape washi-tape tape-pink"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_bike_adventure.jpg" alt="Road Trip on the Bike" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Road Trip on the Bike</h4>
+              <p class="polaroid-caption-text">Matching green vibes, cool breeze & holding onto you 🛵🌿</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Country Roads</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-6" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-6" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">85</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(-2.5deg);">
+            <div class="polaroid-tape washi-tape tape-gold"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_bus_journey.jpg" alt="Cozy Bus Rides" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Cozy Bus Rides</h4>
+              <p class="polaroid-caption-text">Best travel partner for this lifetime and all the next ones 🚌❤️</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Travel Journey</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-7" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-7" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">79</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(3deg);">
+            <div class="polaroid-tape washi-tape tape-mint"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_gf_portrait.jpg" alt="Radiant in Nature" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Radiant in Nature</h4>
+              <p class="polaroid-caption-text">Looking toward the future with that stunning smile 🍃</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Greenery Walk</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-8" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-8" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">91</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(-1.5deg);">
+            <div class="polaroid-tape washi-tape tape-lavender"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_station_canopy.jpg" alt="Transit Canopy Selfie" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Transit Canopy Selfie</h4>
+              <p class="polaroid-caption-text">Even waiting at stations is special when I'm beside you 🚉</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Station Date</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-9" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-9" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">72</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(2.8deg);">
+            <div class="polaroid-tape washi-tape tape-cream"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_sweets_cafe.jpg" alt="Sweet Snack Stops" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Sweet Snack Stops</h4>
+              <p class="polaroid-caption-text">Sweet treats, but none as sweet as you 🧁</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Cafe Date</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-10" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-10" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">83</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="polaroid-item" style="transform: rotate(-2.8deg);">
+            <div class="polaroid-tape washi-tape tape-pink"></div>
+            <div class="polaroid-photo-wrap">
+              <img src="images/photo_gf_cute_pose.jpg" alt="Effortlessly Adorable" class="polaroid-photo" loading="lazy">
+            </div>
+            <div class="polaroid-caption-box">
+              <h4 class="polaroid-title">Effortlessly Adorable</h4>
+              <p class="polaroid-caption-text">Effortlessly cute, eternally loved 🥰</p>
+              <div class="polaroid-footer-row">
+                <span class="polaroid-date-tag">Candid Pose</span>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <button class="polaroid-edit-btn" data-id="p-11" title="Edit this polaroid">✏️ Edit</button>
+                  <button class="polaroid-like-btn" data-id="p-11" aria-label="Like memory">
+                    <span>❤️</span>
+                    <span class="like-num">95</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-actions">
+        <button id="open-add-photo-btn" class="btn-scrapbook-dashed">
+          <span>📸 Pin a New Polaroid Photo</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: LOVE LETTER ==================== -->
+    <section id="letter" class="scrap-section letter-section">
+      <div class="section-header">
+        <div class="sticker-tag">💌 Sealed With a Kiss</div>
+        <h2 class="section-title">A Letter From My Heart</h2>
+        <p class="section-subtitle">
+          Click the wax seal to break it open and read the secret words inside...
+        </p>
+      </div>
+
+      <!-- 3D Interactive Envelope Container -->
+      <div class="envelope-wrapper">
+        <div class="envelope" id="love-envelope">
+          <!-- Back fold of envelope -->
+          <div class="envelope-back"></div>
+          
+          <!-- Letter sheet inside envelope -->
+          <article class="letter-paper" id="letter-paper">
+            <div class="letter-stamp-mark">PAR AVION • FIRST CLASS LOVE</div>
+            
+            <header class="letter-header">
+              <h3 class="letter-salutation" id="letter-salutation">To My Beautiful Girl,</h3>
+              <span class="letter-date" id="letter-date-display">Today & Always</span>
+            </header>
+
+            <div class="letter-body" id="letter-body">
+              <!-- Paragraphs loaded from config.js / script.js -->
+            </div>
+
+            <footer class="letter-footer">
+              <p class="letter-closing" id="letter-closing">Forever and always yours,</p>
+              <p class="letter-signature" id="letter-signature">Yours Always ❤️</p>
+              <p class="letter-ps" id="letter-ps">P.S. You are still the prettiest girl in every room you walk into.</p>
+            </footer>
+
+            <div class="letter-actions">
+              <button id="open-edit-letter-btn" class="btn-edit-letter" title="Customize this love letter">
+                ✏️ Edit My Words
+              </button>
+            </div>
+          </article>
+
+          <!-- Front folds of envelope -->
+          <div class="envelope-front envelope-left"></div>
+          <div class="envelope-front envelope-right"></div>
+          <div class="envelope-front envelope-bottom"></div>
+          
+          <!-- Flap of envelope (animates up) -->
+          <div class="envelope-flap" id="envelope-flap">
+            <div class="wax-seal" id="wax-seal" role="button" tabindex="0" aria-label="Click to break wax seal and open envelope">
+              <div class="seal-inner">
+                <span class="seal-heart">❤️</span>
+                <span class="seal-text">OPEN ME</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="envelope-helper-hint" id="envelope-hint">
+          <span>👆 Tap the red wax seal to open!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 5: SURPRISE PAGE ==================== -->
+    <section id="surprise" class="scrap-section surprise-section">
+      <div class="section-header">
+        <div class="sticker-tag">🎁 Shhh... Top Secret</div>
+        <h2 class="section-title">A Special Surprise Just For You</h2>
+        <p class="section-subtitle">
+          Because someone as sweet, beautiful, and thoughtful as you deserves endless surprises
+        </p>
+      </div>
+
+      <!-- Mystery Vault / Gift Box Box -->
+      <div class="surprise-container" id="surprise-container">
+        
+        <!-- Locked State -->
+        <div class="surprise-locked" id="surprise-locked">
+          <div class="gift-box-illustration">
+            <div class="gift-ribbon-vertical"></div>
+            <div class="gift-ribbon-horizontal"></div>
+            <div class="gift-bow">🎀</div>
+            <div class="gift-lid"></div>
+            <div class="gift-box">
+              <span class="gift-heart-glow">💖</span>
+            </div>
+          </div>
+
+          <h3 class="locked-title">I have a secret waiting inside...</h3>
+          <p class="locked-desc">Are you ready to unlock what is inside my heart?</p>
+
+          <button id="unlock-surprise-btn" class="btn-romantic btn-unlock">
+            <span>✨ Tap to Reveal the Surprise! 🎁</span>
+          </button>
+        </div>
+
+        <!-- Revealed State (Initially hidden) -->
+        <div class="surprise-revealed hidden" id="surprise-revealed">
+          <div class="revealed-card scrapbook-card">
+            <div class="washi-tape tape-surprise-tl"></div>
+            <div class="washi-tape tape-surprise-tr"></div>
+            
+            <div class="reveal-header">
+              <span class="reveal-sparkles">✨ 🎉 💖</span>
+              <h3 class="reveal-title" id="surprise-title">A Secret From My Heart 💌</h3>
+            </div>
+
+            <div class="reveal-message" id="surprise-message">
+              "My love for you grows stronger with every beat of my heart. I have prepared these special forever coupons just for you—redeem them anytime you want!"
+            </div>
+
+            <!-- Romantic Couple Photo in Surprise -->
+            <div class="surprise-photo-frame">
+              <div class="washi-tape tape-surprise-photo"></div>
+              <img src="images/photo_cheek_kiss.jpg" alt="Our sweet cheek kiss" class="surprise-photo-img">
+              <div class="surprise-photo-caption">"With you, every single day since August 20 is pure happiness." 💕</div>
+            </div>
+
+            <div class="coupons-header">
+              <h4>🎟️ Your Romantic "Anytime" Love Coupons</h4>
+              <p>Click any coupon to redeem it with me whenever you like!</p>
+            </div>
+
+            <!-- Love Coupons Grid -->
+            <div class="coupons-grid" id="coupons-container">
+              <!-- Dynamically populated from config.js / script.js -->
+            </div>
+
+            <div class="reveal-footer">
+              <button id="relock-surprise-btn" class="btn-scrapbook-pill">
+                <span>🔄 Close Surprise Box</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scrapbook Footer -->
+  <footer class="scrapbook-footer">
+    <div class="washi-tape tape-footer"></div>
+    <div class="footer-content">
+      <p class="footer-love-text">
+        Crafted with all my love, hugs & kisses for 
+        <span class="footer-name girlfriend-display" id="footer-girlfriend">My Dearest</span>
+      </p>
+      <p class="footer-sub">
+        Every memory in this scrapbook is a reminder of how lucky I am to have you. Forever & always. 💕
+      </p>
+      <div class="footer-buttons">
+        <button id="footer-export-btn" class="btn-scrapbook-pill">
+          <span>💾 Save & Share Scrapbook</span>
+        </button>
+        <button id="footer-top-btn" class="btn-scrapbook-pill">
+          <span>⬆️ Back to Top</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. Personalize & Settings Modal -->
+  <dialog id="personalize-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>💖 Personalize Our Scrapbook</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="personalize-form" class="dialog-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cfg-gf-name">Girlfriend's Name / Pet Name:</label>
+            <input type="text" id="cfg-gf-name" placeholder="e.g. Sophia or Princess" required>
+          </div>
+          <div class="form-group">
+            <label for="cfg-bf-name">Boyfriend's Name:</label>
+            <input type="text" id="cfg-bf-name" placeholder="e.g. Alex or Yours Always" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cfg-anniversary">Relationship / Anniversary Start Date:</label>
+          <input type="date" id="cfg-anniversary" required>
+          <small class="form-hint">Used for the live counter of how many days you've loved each other.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="cfg-quote">Hero Romantic Quote:</label>
+          <textarea id="cfg-quote" rows="2" placeholder="Your favorite love quote"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="cfg-audio-url">Background Music Audio URL or File:</label>
+          <input type="text" id="cfg-audio-url" placeholder="https://example.com/song.mp3 (or leave default)">
+          <div class="file-upload-row">
+            <span>Or select an MP3 file from your computer:</span>
+            <input type="file" id="cfg-audio-file" accept="audio/*">
+          </div>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">Save & Apply Changes 💖</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 2. Edit Love Letter Modal -->
+  <dialog id="letter-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>💌 Edit Love Letter</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="letter-form" class="dialog-form">
+        <div class="form-group">
+          <label for="cfg-letter-salutation">Salutation / Opening:</label>
+          <input type="text" id="cfg-letter-salutation" placeholder="To My Beautiful Girl,">
+        </div>
+        <div class="form-group">
+          <label for="cfg-letter-text">Letter Body (separate paragraphs with blank lines):</label>
+          <textarea id="cfg-letter-text" rows="8" placeholder="Write your heartfelt words here..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cfg-letter-closing">Closing line:</label>
+            <input type="text" id="cfg-letter-closing" placeholder="Forever and always yours,">
+          </div>
+          <div class="form-group">
+            <label for="cfg-letter-signature">Signature:</label>
+            <input type="text" id="cfg-letter-signature" placeholder="Alex ❤️">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cfg-letter-ps">P.S. Note:</label>
+          <input type="text" id="cfg-letter-ps" placeholder="P.S. You will always be my favorite.">
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">Update Love Letter 💌</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 3. Add Memory Milestone Modal -->
+  <dialog id="memory-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>📌 Add a New Milestone to Our Timeline</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="memory-form" class="dialog-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mem-title">Memory Title:</label>
+            <input type="text" id="mem-title" placeholder="e.g. Star-gazing at the Beach" required>
+          </div>
+          <div class="form-group">
+            <label for="mem-date">Date or Occasion:</label>
+            <input type="text" id="mem-date" placeholder="e.g. July 24, 2024" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mem-category">Category:</label>
+            <select id="mem-category">
+              <option value="milestone">Milestone 💍</option>
+              <option value="date">Date ☕</option>
+              <option value="trip">Trip / Adventure 🚗</option>
+              <option value="joke">Inside Joke 🍕</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mem-alignment">Photo Alignment on Timeline:</label>
+            <select id="mem-alignment">
+              <option value="left">Left ⬅️</option>
+              <option value="center">Center (Full Width Scrapbook) 🎯</option>
+              <option value="right">Right ➡️</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mem-badge">Badge Label:</label>
+            <input type="text" id="mem-badge" placeholder="e.g. Unforgettable">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mem-desc">Story / What Happened:</label>
+          <textarea id="mem-desc" rows="3" placeholder="Describe this precious moment..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="mem-photo-file">Photo (Upload from device or enter URL below):</label>
+          <input type="file" id="mem-photo-file" accept="image/*">
+          <input type="text" id="mem-photo-url" placeholder="Or paste image URL...">
+        </div>
+        <div class="form-group">
+          <label for="mem-caption">Polaroid Caption:</label>
+          <input type="text" id="mem-caption" placeholder="e.g. You looked so stunning!">
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">Add to Timeline 📌</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 4. Add Polaroid Photo Modal -->
+  <dialog id="photo-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>📸 Pin a New Polaroid Photo</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="photo-form" class="dialog-form">
+        <div class="form-group">
+          <label for="photo-file">Select Photo from Your Computer/Phone:</label>
+          <input type="file" id="photo-file" accept="image/*">
+          <span class="form-or">or</span>
+          <input type="text" id="photo-url" placeholder="Paste an image URL...">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="photo-title">Title / Moment:</label>
+            <input type="text" id="photo-title" placeholder="e.g. Our Cozy Coffee Walk" required>
+          </div>
+          <div class="form-group">
+            <label for="photo-date">Date or Season:</label>
+            <input type="text" id="photo-date" placeholder="e.g. Autumn Morning">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="photo-caption">Short Handwritten Caption:</label>
+          <input type="text" id="photo-caption" placeholder="e.g. The best smile in the world." required>
+        </div>
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">Pin to Scrapbook 📌</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 5. Polaroid Zoom / Lightbox Modal -->
+  <dialog id="polaroid-zoom-dialog" class="scrapbook-dialog zoom-dialog">
+    <div class="dialog-content polaroid-zoom-wrap">
+      <button class="dialog-close zoom-close" data-close-dialog aria-label="Close preview">&times;</button>
+      <div class="polaroid-frame zoom-frame">
+        <div class="washi-tape tape-zoom"></div>
+        <div class="polaroid-img-wrap">
+          <img id="zoom-img" src="" alt="Couple Memory Expanded">
+        </div>
+        <div class="polaroid-caption-wrap zoom-caption-wrap">
+          <h4 id="zoom-title" class="zoom-title">Memory Title</h4>
+          <p id="zoom-caption" class="zoom-caption">Handwritten caption text</p>
+          <span id="zoom-date" class="zoom-date">Date</span>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 6. Boyfriend's Master Edit Studio Dialog -->
+  <dialog id="boyfriend-editor-dialog" class="scrapbook-dialog bf-studio-dialog">
+    <div class="dialog-content bf-studio-content">
+      <div class="dialog-header">
+        <div class="header-title-wrap">
+          <span class="bf-crown">👑</span>
+          <div>
+            <h3>Boyfriend's Edit Studio</h3>
+            <p class="dialog-subtitle">Personalize your scrapbook, edit photos, memories & letter for your girl</p>
+          </div>
+        </div>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Studio Navigation Tabs -->
+      <nav class="studio-tabs" id="studio-tab-bar">
+        <button type="button" class="studio-tab-btn active" data-tab="tab-couple">👤 Couple Info</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-timeline">⏳ Memories</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-polaroids">📸 Photos</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-letter">💌 Love Letter</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-surprise">🎁 Surprise</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-music">🎵 Song</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-gf-notes">📬 Her Love Notes (<span id="studio-notes-count">1</span>)</button>
+        <button type="button" class="studio-tab-btn" data-tab="tab-security">🔐 Couple PINs</button>
+      </nav>
+
+      <!-- Tab 1: Couple Details -->
+      <div class="studio-tab-pane active" id="tab-couple">
+        <form id="bf-couple-form" class="dialog-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bf-cfg-bf-name">Your Name (Boyfriend):</label>
+              <input type="text" id="bf-cfg-bf-name" placeholder="e.g. Sriram / Alex" required>
+            </div>
+            <div class="form-group">
+              <label for="bf-cfg-gf-name">Her Name (Girlfriend):</label>
+              <input type="text" id="bf-cfg-gf-name" placeholder="e.g. My Princess / Sophia" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bf-cfg-anniversary">Start / Anniversary Date (August 20):</label>
+              <input type="date" id="bf-cfg-anniversary" required>
+            </div>
+            <div class="form-group">
+              <label for="bf-cfg-time">Start Time (Optional):</label>
+              <input type="time" id="bf-cfg-time" value="00:00">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bf-cfg-subtitle">Hero Welcome Subtitle:</label>
+            <input type="text" id="bf-cfg-subtitle" placeholder="Every single page of my life became magical the day you walked into it.">
+          </div>
+          <div class="form-group">
+            <label for="bf-cfg-quote">Romantic Love Quote:</label>
+            <textarea id="bf-cfg-quote" rows="2" placeholder="Your favorite quote for her"></textarea>
+          </div>
+          <div class="dialog-actions">
+            <button type="submit" class="btn-save">💾 Save Couple Details 💖</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 2: Timeline Memories Manager -->
+      <div class="studio-tab-pane" id="tab-timeline">
+        <div class="studio-toolbar-row">
+          <span>Your Romantic Memories on the Timeline:</span>
+          <button type="button" id="studio-add-memory-btn" class="btn-studio-pill">➕ Add New Milestone</button>
+        </div>
+        <div class="studio-timeline-items" id="studio-timeline-list">
+          <!-- Populated dynamically with inline edit & delete buttons -->
+        </div>
+      </div>
+
+      <!-- Tab 3: Polaroid Photos Manager -->
+      <div class="studio-tab-pane" id="tab-polaroids">
+        <div class="studio-toolbar-row">
+          <span>Photos in Your Polaroid Gallery:</span>
+          <button type="button" id="studio-add-photo-btn" class="btn-studio-pill">📸 Add New Photo</button>
+        </div>
+        <div class="studio-polaroid-items" id="studio-polaroid-list">
+          <!-- Populated dynamically with thumbnails, captions & edit buttons -->
+        </div>
+      </div>
+
+      <!-- Tab 4: Love Letter Editor -->
+      <div class="studio-tab-pane" id="tab-letter">
+        <form id="bf-letter-form" class="dialog-form">
+          <div class="form-group">
+            <label for="bf-letter-salutation">Letter Salutation / Opening:</label>
+            <input type="text" id="bf-letter-salutation" placeholder="To My Beautiful Girl,">
+          </div>
+          <div class="form-group">
+            <label for="bf-letter-text">Love Letter Body (Separate paragraphs with empty line):</label>
+            <textarea id="bf-letter-text" rows="8" placeholder="Write your heartfelt letter here..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bf-letter-closing">Closing line:</label>
+              <input type="text" id="bf-letter-closing" placeholder="Forever and always yours,">
+            </div>
+            <div class="form-group">
+              <label for="bf-letter-signature">Your Signature:</label>
+              <input type="text" id="bf-letter-signature" placeholder="Yours Always ❤️">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bf-letter-ps">P.S. Note:</label>
+            <input type="text" id="bf-letter-ps" placeholder="P.S. You will always be the prettiest girl in every room.">
+          </div>
+          <div class="dialog-actions">
+            <button type="submit" class="btn-save">💌 Update Love Letter</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 5: Surprise & Love Coupons -->
+      <div class="studio-tab-pane" id="tab-surprise">
+        <form id="bf-surprise-form" class="dialog-form">
+          <div class="form-group">
+            <label for="bf-surprise-title">Surprise Title:</label>
+            <input type="text" id="bf-surprise-title" placeholder="A Secret From My Heart 💌">
+          </div>
+          <div class="form-group">
+            <label for="bf-surprise-message">Secret Hidden Love Message:</label>
+            <textarea id="bf-surprise-message" rows="3" placeholder="Your secret romantic message..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Romantic Love Coupons:</label>
+            <div class="coupons-manage-list" id="studio-coupons-list"></div>
+            <button type="button" id="btn-reset-coupons" class="btn-studio-outline" style="margin-top: 10px;">
+              🔄 Un-redeem All Coupons (Let Her Redeem Them Again!)
+            </button>
+          </div>
+          <div class="dialog-actions">
+            <button type="submit" class="btn-save">🎁 Update Surprise Section</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 6: Background Music -->
+      <div class="studio-tab-pane" id="tab-music">
+        <form id="bf-music-form" class="dialog-form">
+          <div class="form-group">
+            <label for="bf-music-title">Song Display Title:</label>
+            <input type="text" id="bf-music-title" placeholder="Our Romantic Melody 🎶">
+          </div>
+          <div class="form-group">
+            <label for="bf-music-url">Audio MP3 URL:</label>
+            <input type="text" id="bf-music-url" placeholder="https://example.com/song.mp3">
+          </div>
+          <div class="form-group">
+            <label for="bf-music-file">Or Choose an MP3 Song from your Computer:</label>
+            <input type="file" id="bf-music-file" accept="audio/*">
+          </div>
+          <div class="dialog-actions">
+            <button type="submit" class="btn-save">🎵 Update Song</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 7: Girlfriend's Love Notes to Boyfriend -->
+      <div class="studio-tab-pane" id="tab-gf-notes">
+        <div class="studio-toolbar-row">
+          <span>📬 Sweet Love Notes Sent by Your Girlfriend:</span>
+          <button type="button" id="btn-refresh-notes" class="btn-studio-mini">🔄 Refresh</button>
+        </div>
+        <div id="studio-gf-notes-list" class="studio-gf-notes-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Tab 8: Couple PINs & Security -->
+      <div class="studio-tab-pane" id="tab-security">
+        <form id="bf-security-form" class="dialog-form">
+          <div class="security-intro-box">
+            <span class="sec-icon">🔐</span>
+            <div>
+              <strong>Separate Couple Passcodes</strong>
+              <p>Customize the private passcodes for Boyfriend and Girlfriend to enter the website portal.</p>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sec-bf-pin">👑 Boyfriend PIN (For Editing & Studio):</label>
+              <input type="text" id="sec-bf-pin" maxlength="10" placeholder="Default: 1234" required>
+              <small class="field-hint">Used by you to access editing & studio tools.</small>
+            </div>
+            <div class="form-group">
+              <label for="sec-gf-pin">👸 Girlfriend PIN (For Princess Mode):</label>
+              <input type="text" id="sec-gf-pin" maxlength="10" placeholder="Default: 0820" required>
+              <small class="field-hint">Used by her for personal view & love notes. (Default: 0820 for August 20)</small>
+            </div>
+          </div>
+          <div class="dialog-actions">
+            <button type="button" id="btn-reset-pins" class="btn-cancel" style="margin-right: auto;">🔄 Reset to Default (1234 & 0820)</button>
+            <button type="submit" class="btn-save">💾 Update Passcodes</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </dialog>
+
+  <!-- 7. Modal to edit an individual timeline memory -->
+  <dialog id="edit-single-memory-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>✏️ Edit Timeline Memory</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="edit-single-memory-form" class="dialog-form">
+        <input type="hidden" id="edit-mem-id">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-mem-title">Memory Title:</label>
+            <input type="text" id="edit-mem-title" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-mem-date">Date or Occasion:</label>
+            <input type="text" id="edit-mem-date" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-mem-category">Category:</label>
+            <select id="edit-mem-category">
+              <option value="milestone">Milestone 💍</option>
+              <option value="date">Date ☕</option>
+              <option value="trip">Trip / Adventure 🚗</option>
+              <option value="joke">Inside Joke 🍕</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-mem-alignment">Card Alignment:</label>
+            <select id="edit-mem-alignment">
+              <option value="left">Left ⬅️</option>
+              <option value="center">Center (Full Width) 🎯</option>
+              <option value="right">Right ➡️</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-mem-badge">Badge Label:</label>
+            <input type="text" id="edit-mem-badge">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="edit-mem-desc">Story Description:</label>
+          <textarea id="edit-mem-desc" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-mem-file">Change Photo (Upload file or paste URL):</label>
+          <input type="file" id="edit-mem-file" accept="image/*">
+          <input type="text" id="edit-mem-url" placeholder="Or image path / URL..." style="margin-top: 6px;">
+        </div>
+        <div class="form-group">
+          <label for="edit-mem-caption">Polaroid Caption:</label>
+          <input type="text" id="edit-mem-caption">
+        </div>
+        <div class="dialog-actions">
+          <button type="button" id="btn-delete-memory" class="btn-cancel" style="margin-right: auto; color: #d32f2f; border-color: #ffcdd2;">🗑️ Delete Memory</button>
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">💾 Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 8. Modal to edit an individual polaroid photo in the gallery -->
+  <dialog id="edit-single-photo-dialog" class="scrapbook-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>✏️ Edit Polaroid Photo</h3>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+      <form id="edit-single-photo-form" class="dialog-form">
+        <input type="hidden" id="edit-photo-id">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-photo-title">Title / Moment:</label>
+            <input type="text" id="edit-photo-title" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-photo-date">Date or Occasion:</label>
+            <input type="text" id="edit-photo-date">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="edit-photo-caption">Handwritten Caption:</label>
+          <input type="text" id="edit-photo-caption" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-photo-tape">Washi Tape Color:</label>
+            <select id="edit-photo-tape">
+              <option value="tape-pink">Blush Pink 🎀</option>
+              <option value="tape-gold">Warm Gold 💛</option>
+              <option value="tape-mint">Pastel Mint 🌿</option>
+              <option value="tape-cream">Cream Butter 🧈</option>
+              <option value="tape-lavender">Soft Lavender 💜</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-photo-rotation">Tilt Angle (-5 to 5 deg):</label>
+            <input type="number" id="edit-photo-rotation" step="0.5" min="-8" max="8">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="edit-photo-file">Change Photo (Upload new or paste URL):</label>
+          <input type="file" id="edit-photo-file" accept="image/*">
+          <input type="text" id="edit-photo-url" placeholder="Or image path / URL..." style="margin-top: 6px;">
+        </div>
+        <div class="dialog-actions">
+          <button type="button" id="btn-delete-photo" class="btn-cancel" style="margin-right: auto; color: #d32f2f; border-color: #ffcdd2;">🗑️ Delete Photo</button>
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save">💾 Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 9. Separate Couple Login Modal -->
+  <dialog id="couple-login-dialog" class="scrapbook-dialog login-dialog">
+    <div class="dialog-content login-dialog-content">
+      <div class="washi-tape tape-login-top"></div>
+      <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      
+      <div class="login-dialog-header">
+        <div class="login-wax-seal">💌</div>
+        <h3>Welcome to Our Love Sanctuary 💕</h3>
+        <p class="login-subtitle">Who is visiting our love story today?</p>
+      </div>
+
+      <!-- Two Profile Cards to choose role -->
+      <div class="couple-profiles-grid">
+        <!-- Boyfriend Profile Card -->
+        <div class="couple-profile-card active" id="profile-card-bf" data-role="boyfriend">
+          <div class="profile-avatar-wrap">
+            <span class="profile-avatar-icon">👑</span>
+            <div class="profile-status-dot"></div>
+          </div>
+          <h4 class="profile-name boyfriend-display">Yours Always</h4>
+          <span class="profile-role-pill bf-role-pill">Boyfriend / Author</span>
+          <p class="profile-desc">Edit memories, customize scrapbook & read her sweet love notes.</p>
+        </div>
+
+        <!-- Girlfriend Profile Card -->
+        <div class="couple-profile-card" id="profile-card-gf" data-role="girlfriend">
+          <div class="profile-avatar-wrap">
+            <span class="profile-avatar-icon">👸</span>
+            <div class="profile-status-dot"></div>
+          </div>
+          <h4 class="profile-name girlfriend-display">My Dearest</h4>
+          <span class="profile-role-pill gf-role-pill">Princess / My Love 💕</span>
+          <p class="profile-desc">Enjoy our story, claim love coupons, and send him private love notes.</p>
+        </div>
+      </div>
+
+      <!-- PIN Authentication Form -->
+      <form id="couple-login-form" class="couple-login-form">
+        <input type="hidden" id="login-active-role" value="boyfriend">
+        
+        <div class="login-input-card">
+          <label for="login-pin-input" id="login-pin-label">
+            <span id="login-role-icon">👑</span> Enter Boyfriend PIN:
+          </label>
+          <div class="pin-input-wrap">
+            <input type="password" id="login-pin-input" inputmode="numeric" placeholder="Enter PIN (e.g. 1234)" autocomplete="off" required>
+            <button type="button" id="btn-toggle-pin-visibility" class="btn-pin-eye" title="Toggle visibility">👁️</button>
+          </div>
+          <div class="login-hint-text" id="login-hint-text">
+            💡 Default PIN: <strong>1234</strong>
+          </div>
+          <div id="login-error-msg" class="login-error-msg" style="display:none;"></div>
+        </div>
+
+        <div class="login-actions">
+          <button type="submit" class="btn-login-submit" id="btn-login-submit">
+            <span>Enter Love Sanctuary 💖</span>
+          </button>
+          <button type="button" id="btn-login-guest" class="btn-login-guest" title="Browse without logging in">
+            <span>Continue as Guest / Preview 🕊️</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </dialog>
+
+  <!-- 10. Girlfriend's Sweet Love Note Modal -->
+  <dialog id="gf-love-note-dialog" class="scrapbook-dialog gf-note-dialog">
+    <div class="dialog-content gf-note-content">
+      <div class="washi-tape tape-note-top"></div>
+      <div class="dialog-header">
+        <div class="header-title-wrap">
+          <span class="note-stationery-icon">💌</span>
+          <div>
+            <h3>Write a Love Note to <span class="boyfriend-display">Yours Always</span></h3>
+            <p class="dialog-subtitle">Send a sweet note straight to his heart! It will appear in his studio.</p>
+          </div>
+        </div>
+        <button class="dialog-close" data-close-dialog aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="gf-love-note-form" class="dialog-form">
+        <div class="form-group">
+          <label>How are you feeling right now?</label>
+          <div class="mood-chips-container" id="note-mood-chips">
+            <button type="button" class="mood-chip active" data-mood="🥰 Feeling In Love" data-sticker="💖">🥰 In Love 💖</button>
+            <button type="button" class="mood-chip" data-mood="💋 Sending Kisses" data-sticker="💋">💋 Kisses 💋</button>
+            <button type="button" class="mood-chip" data-mood="🤗 Need a Big Hug" data-sticker="🧸">🤗 Big Hug 🧸</button>
+            <button type="button" class="mood-chip" data-mood="✨ Missing You" data-sticker="🌙">✨ Missing You 🌙</button>
+            <button type="button" class="mood-chip" data-mood="🍫 Sweet Cravings" data-sticker="🍓">🍫 Craving You 🍓</button>
+          </div>
+          <input type="hidden" id="note-selected-mood" value="🥰 Feeling In Love">
+          <input type="hidden" id="note-selected-sticker" value="💖">
+        </div>
+
+        <div class="form-group">
+          <label for="gf-note-message">Your Sweet Message:</label>
+          <textarea id="gf-note-message" class="stationery-textarea" rows="4" placeholder="Dear my love, I just wanted to tell you..." required></textarea>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-dialog>Cancel</button>
+          <button type="submit" class="btn-save btn-send-note">Send with All My Love 💌</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Configuration and Main Script -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

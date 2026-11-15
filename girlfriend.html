@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Princess 💕 | Our Romantic Love Story</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #faf4ee;
+      background-image: 
+        radial-gradient(#f0dbdb 1px, transparent 1px),
+        radial-gradient(#f3e5e5 1px, #faf4ee 1px);
+      background-size: 32px 32px;
+      font-family: 'Nunito', sans-serif;
+      color: #423035;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts in background */
+    .heart-bg {
+      position: absolute;
+      color: rgba(255, 64, 113, 0.2);
+      user-select: none;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .entrance-card {
+      background: #ffffff;
+      border: 2px dashed #fcc2d7;
+      border-radius: 24px;
+      padding: 40px 32px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(232, 93, 127, 0.18);
+      position: relative;
+      z-index: 10;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .washi-tape-top {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 30px;
+      background: rgba(248, 165, 184, 0.65);
+      border-left: 2px dashed rgba(255, 255, 255, 0.8);
+      border-right: 2px dashed rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .crown-icon {
+      font-size: 3.5rem;
+      display: inline-block;
+      animation: crownBounce 2s infinite ease-in-out;
+      margin-bottom: 8px;
+    }
+    @keyframes crownBounce {
+      0%, 100% { transform: translateY(0) rotate(-6deg); }
+      50% { transform: translateY(-8px) rotate(6deg); }
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.6rem;
+      color: #c2255c;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: #7d656b;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .polaroid-mini {
+      background: #fff;
+      padding: 10px 10px 24px 10px;
+      border: 1px solid #ffd4e0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transform: rotate(-3deg);
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 24px;
+      transition: transform 0.3s;
+    }
+    .polaroid-mini:hover {
+      transform: rotate(0deg) scale(1.03);
+    }
+    .polaroid-mini img {
+      width: 170px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .polaroid-mini-cap {
+      font-family: 'Caveat', cursive;
+      font-size: 1.25rem;
+      color: #c2255c;
+      margin-top: 8px;
+    }
+
+    .btn-enter {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #ff4071, #f857a6);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 15px 24px;
+      border-radius: 30px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      box-shadow: 0 6px 20px rgba(255, 64, 113, 0.4);
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-enter:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(255, 64, 113, 0.5);
+    }
+
+    .auto-redirect-note {
+      font-size: 0.85rem;
+      color: #8c7379;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts Elements -->
+  <div class="heart-bg" style="left: 10%; animation-duration: 7s;">💖</div>
+  <div class="heart-bg" style="left: 25%; animation-duration: 9s; font-size: 1.8rem;">💕</div>
+  <div class="heart-bg" style="left: 45%; animation-duration: 6s; font-size: 2rem;">❤️</div>
+  <div class="heart-bg" style="left: 70%; animation-duration: 8s;">🌸</div>
+  <div class="heart-bg" style="left: 85%; animation-duration: 10s; font-size: 1.5rem;">✨</div>
+
+  <div class="entrance-card">
+    <div class="washi-tape-top"></div>
+    <div class="crown-icon">👑</div>
+    <h1 id="gf-heading">Welcome, My Princess 💕</h1>
+    <p class="subtitle" id="gf-sub">
+      A romantic sanctuary of memories from <strong>August 20</strong> until today, created with all his heart just for you.
+    </p>
+
+    <div class="polaroid-mini">
+      <img id="gf-hero-img" src="images/photo_selfie_outdoor.jpg" alt="Our love story">
+      <div class="polaroid-mini-cap">August 20 • Where Forever Began ✨</div>
+    </div>
+
+    <button type="button" id="btn-enter-scrapbook" class="btn-enter">
+      Enter Your Love Sanctuary 💖
+    </button>
+    <div class="auto-redirect-note">Opening your personalized romantic scrapbook...</div>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      // 1. Immediately activate girlfriend role in localStorage
+      localStorage.setItem('couple_active_role', 'girlfriend');
+
+      // 2. Personalize name from config / localStorage
+      const saved = localStorage.getItem('romantic_scrapbook_state_v2');
+      let data = window.ROMANTIC_CONFIG || {};
+      if (saved) {
+        try { data = { ...data, ...JSON.parse(saved) }; } catch (e) {}
+      }
+
+      const gfName = data.girlfriendName || 'My Princess';
+      const bfName = data.boyfriendName || 'Yours Always';
+      document.getElementById('gf-heading').textContent = `Welcome, Princess ${gfName} 💕`;
+      document.getElementById('gf-sub').innerHTML = `Every photo, love letter, and memory here was created by <strong>${bfName}</strong> with endless love just for you.`;
+
+      function goToScrapbook() {
+        window.location.href = 'index.html?role=girlfriend';
+      }
+
+      document.getElementById('btn-enter-scrapbook').addEventListener('click', goToScrapbook);
+
+      // Auto-redirect after 3 seconds for a sweet greeting animation
+      setTimeout(goToScrapbook, 2500);
+    })();
+  </script>
+</body>
+</html>
