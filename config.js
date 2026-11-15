@@ -5,9 +5,9 @@
 
 window.ROMANTIC_CONFIG = {
   // Couple Details
-  girlfriendName: "Teja",
-  boyfriendName: "Yours Always",
-  petNames: "Teja & My Love",
+  girlfriendName: "Samyukthaa",
+  boyfriendName: "Raghav",
+  petNames: "Samyukthaa & Raghav",
   
   // Relationship Start Date: August 20 (Live counter calculates from here to current live time)
   anniversaryDate: "2024-08-20",
@@ -279,7 +279,7 @@ window.ROMANTIC_CONFIG = {
 
   // Love Letter
   letter: {
-    salutation: "To My Beautiful Teja,",
+    salutation: "To My Beautiful Samyukthaa,",
     paragraphs: [
       "Ever since August 20, my entire world has been filled with colors I never knew existed. Looking back at all our photos—our rides together, the way you laugh until your eyes crinkle, our bus journeys, and every sweet cheek kiss—I realize how blessed I truly am.",
       "Thank you for being my constant smile, my safe haven, and my favorite adventure. With you, even an ordinary day turns into a memory I want to keep forever.",
@@ -287,7 +287,7 @@ window.ROMANTIC_CONFIG = {
       "You are my today, my tomorrow, and my forever."
     ],
     closing: "Forever and always yours,",
-    signature: "Yours Always ❤️",
+    signature: "Raghav ❤️",
     postscript: "P.S. You will always be the prettiest girl in every room you walk into."
   },
 

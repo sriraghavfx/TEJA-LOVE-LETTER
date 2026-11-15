@@ -1,4 +1,4 @@
-# Our Love Story 💕 | Romantic Scrapbook Website
+# Samyukthaa & Raghav 💕 | Our Romantic Love Story Scrapbook
 
 A romantic couple memories scrapbook web application handcrafted for your girlfriend. Designed with a cute pastel aesthetic, washi tapes, tilted polaroids, animated hearts, a live relationship counter starting from **August 20**, timeline photo alignment controls, an interactive 3D wax seal love letter, secret surprise chamber with redeemable love coupons, and background music player.
 

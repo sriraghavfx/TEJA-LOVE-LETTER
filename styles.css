@@ -650,13 +650,13 @@ body {
 
 /* Featured Couple Polaroid in Hero */
 .hero-featured-polaroid {
-  max-width: 260px;
+  max-width: 290px;
   margin: 0 auto 30px;
   background: #fff;
-  padding: 12px 12px 20px;
-  border-radius: 4px;
-  box-shadow: var(--shadow-polaroid);
-  transform: rotate(-3deg);
+  padding: 12px 12px 22px;
+  border-radius: 6px;
+  box-shadow: 0 14px 34px rgba(232, 93, 127, 0.22);
+  transform: rotate(-2.5deg);
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -678,9 +678,11 @@ body {
 
 .hero-photo-img {
   width: 100%;
-  height: 190px;
+  height: 290px;
   object-fit: cover;
-  border-radius: 2px;
+  object-position: center 20%;
+  border-radius: 4px;
+  display: block;
 }
 
 .hero-photo-caption {
@@ -1196,12 +1198,14 @@ body {
 /* Mini Polaroid inside Timeline */
 .timeline-mini-polaroid {
   background: #fff;
-  padding: 8px 8px 16px;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  max-width: 260px;
+  padding: 10px 10px 18px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  max-width: 320px;
+  width: 100%;
   display: inline-block;
-  margin-top: 6px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
 }
 
 .timeline-item.left .timeline-mini-polaroid {
@@ -1214,9 +1218,11 @@ body {
 
 .mini-polaroid-img {
   width: 100%;
-  height: 150px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 2px;
+  object-position: center 22%;
+  border-radius: 4px;
+  display: block;
 }
 
 .mini-polaroid-caption {
@@ -1312,10 +1318,10 @@ body {
 
 .polaroid-photo-wrap {
   width: 100%;
-  height: 240px;
+  height: 310px;
   overflow: hidden;
-  border-radius: 2px;
-  background: #f0e6e8;
+  border-radius: 4px;
+  background: #fbf5f7;
   position: relative;
 }
 
@@ -1323,7 +1329,18 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   transition: transform 0.4s ease;
+}
+
+/* Perfect focus for landscape orientation photos */
+.polaroid-photo[src*="bike"],
+.polaroid-photo[src*="bus"],
+.mini-polaroid-img[src*="bike"],
+.mini-polaroid-img[src*="bus"],
+.hero-photo-img[src*="bike"],
+.hero-photo-img[src*="bus"] {
+  object-position: center center !important;
 }
 
 .polaroid-item:hover .polaroid-photo {
@@ -2187,10 +2204,11 @@ body {
 
 .zoom-frame img {
   width: 100%;
-  max-height: 480px;
+  max-height: 540px;
   object-fit: contain;
-  background: #111;
-  border-radius: 4px;
+  background: #fffdfb;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
 .zoom-caption-wrap {

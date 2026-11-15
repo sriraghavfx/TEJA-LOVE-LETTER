@@ -31,6 +31,14 @@
       adminState.girlfriendNotes = defaultData.girlfriendNotes || [];
     }
     let needsAdminSave = false;
+    if (!adminState.girlfriendName || adminState.girlfriendName === 'My Dearest' || adminState.girlfriendName === 'Teja') {
+      adminState.girlfriendName = 'Samyukthaa';
+      needsAdminSave = true;
+    }
+    if (!adminState.boyfriendName || adminState.boyfriendName === 'Yours Always') {
+      adminState.boyfriendName = 'Raghav';
+      needsAdminSave = true;
+    }
     if (!adminState.milestones || adminState.milestones.length < (defaultData.milestones || []).length || (adminState.milestones[0].image && adminState.milestones[0].image.includes('unsplash.com'))) {
       adminState.milestones = defaultData.milestones;
       needsAdminSave = true;

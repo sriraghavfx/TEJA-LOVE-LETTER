@@ -28,6 +28,15 @@
           appState.anniversaryDate = defaultData.anniversaryDate || '2024-08-20';
         }
         let needsUpgradeSave = false;
+        // Upgrade couple names to Samyukthaa & Raghav
+        if (!appState.girlfriendName || appState.girlfriendName === 'My Dearest' || appState.girlfriendName === 'Teja') {
+          appState.girlfriendName = 'Samyukthaa';
+          needsUpgradeSave = true;
+        }
+        if (!appState.boyfriendName || appState.boyfriendName === 'Yours Always') {
+          appState.boyfriendName = 'Raghav';
+          needsUpgradeSave = true;
+        }
         // Upgrade milestones to use real couple photos and ensure all 11 photos are loaded
         if (!appState.milestones || appState.milestones.length < (defaultData.milestones || []).length || (appState.milestones[0].image && appState.milestones[0].image.includes('unsplash.com'))) {
           appState.milestones = defaultData.milestones;
@@ -1018,7 +1027,7 @@
     const letter = appState.letter || {};
     elements.letterSalutation.textContent = letter.salutation || 'To My Beautiful Girl,';
     elements.letterClosing.textContent = letter.closing || 'Forever and always yours,';
-    elements.letterSignature.textContent = (appState.boyfriendName || 'Yours Always') + ' ❤️';
+    elements.letterSignature.textContent = (appState.boyfriendName || 'Raghav') + ' ❤️';
     elements.letterPs.textContent = letter.postscript || 'P.S. You will always be my favorite.';
 
     // Populate paragraphs
@@ -1167,8 +1176,8 @@
 
   // --- PERSONALIZATION & SETTINGS MODAL ---
   function updateDisplays() {
-    const gf = appState.girlfriendName || 'My Dearest';
-    const bf = appState.boyfriendName || 'Yours Always';
+    const gf = appState.girlfriendName || 'Samyukthaa';
+    const bf = appState.boyfriendName || 'Raghav';
 
     // Update names everywhere
     document.querySelectorAll('.girlfriend-display').forEach(el => el.textContent = gf);
@@ -1287,8 +1296,8 @@
     activeRole = role;
     localStorage.setItem('couple_active_role', role);
 
-    const gf = appState.girlfriendName || 'My Dearest';
-    const bf = appState.boyfriendName || 'Yours Always';
+    const gf = appState.girlfriendName || 'Samyukthaa';
+    const bf = appState.boyfriendName || 'Raghav';
 
     // Reset base classes
     document.body.classList.remove('role-boyfriend', 'role-girlfriend', 'role-guest', 'girlfriend-mode');
@@ -1379,8 +1388,8 @@
       elements.profileCardGf.classList.toggle('active', role === 'girlfriend');
     }
 
-    const gf = appState.girlfriendName || 'My Dearest';
-    const bf = appState.boyfriendName || 'Yours Always';
+    const gf = appState.girlfriendName || 'Samyukthaa';
+    const bf = appState.boyfriendName || 'Raghav';
 
     if (role === 'boyfriend') {
       if (elements.loginPinLabel) elements.loginPinLabel.innerHTML = `<span id="login-role-icon">👑</span> Enter ${bf}'s PIN:`;
