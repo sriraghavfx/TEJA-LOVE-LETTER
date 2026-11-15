@@ -1218,9 +1218,8 @@ body {
 
 .mini-polaroid-img {
   width: 100%;
-  height: 250px;
+  height: 270px;
   object-fit: cover;
-  object-position: center 22%;
   border-radius: 4px;
   display: block;
 }
@@ -1329,17 +1328,63 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 40%;
   transition: transform 0.4s ease;
 }
 
-/* Perfect focus for landscape orientation photos */
-.polaroid-photo[src*="bike"],
-.polaroid-photo[src*="bus"],
-.mini-polaroid-img[src*="bike"],
-.mini-polaroid-img[src*="bus"],
-.hero-photo-img[src*="bike"],
-.hero-photo-img[src*="bus"] {
+/* ============================================================
+   INDIVIDUAL PHOTO FOCAL POINT TUNING (PERSONS IN PERFECT FOCUS)
+   Focuses precisely on faces, smiles & holding hands, not background!
+   ============================================================ */
+
+/* 1. Her Joyful Laugh: Person & smile are situated in the lower section (avoiding tree foliage) */
+img[src*="photo_gf_joyful_laugh"] {
+  object-position: center 84% !important;
+}
+
+/* 2. Holding Hands at Mall: Couple & intertwined hands in middle-lower section (avoiding empty mall ceiling) */
+img[src*="photo_mall_holding_hands"] {
+  object-position: center 62% !important;
+}
+
+/* 3. Cute Candid Pose: Subject centered in middle-lower frame */
+img[src*="photo_gf_cute_pose"] {
+  object-position: center 74% !important;
+}
+
+/* 4. Nature Walk Portrait: Subject framed in upper-middle */
+img[src*="photo_gf_portrait"] {
+  object-position: center 22% !important;
+}
+
+/* 5. Sweet Treats Cafe Date: Faces framed above counter */
+img[src*="photo_sweets_cafe"] {
+  object-position: center 25% !important;
+}
+
+/* 6. Outdoor Couple Selfie (Where Forever Began) */
+img[src*="photo_selfie_outdoor"] {
+  object-position: center 40% !important;
+}
+
+/* 7. The Sweetest Cheek Kiss */
+img[src*="photo_cheek_kiss"] {
+  object-position: center 44% !important;
+}
+
+/* 8. Angel in Traditional Saree */
+img[src*="photo_gf_saree_hearts"] {
+  object-position: center 44% !important;
+}
+
+/* 9. Station Canopy Selfie */
+img[src*="photo_station_canopy"] {
+  object-position: center 45% !important;
+}
+
+/* 10 & 11. Landscape Orientation: Bike Adventure & Bus Travel */
+img[src*="photo_bike_adventure"],
+img[src*="photo_bus_journey"] {
   object-position: center center !important;
 }
 
